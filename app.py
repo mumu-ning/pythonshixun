@@ -74,8 +74,9 @@ def generate_wordcloud(word_count):
     font_filename = "SimHei.ttf"  # 本地保存的文件名
     # 下载字体文件
     download_font(font_url, font_filename)
+    
     wc = WordCloud(
-        font_path=font_path,  # 使用GitHub上的字体文件
+        font_path=font_filename,  # 使用GitHub上的字体文件
         width=800,
         height=400,
         background_color='white'
@@ -99,7 +100,7 @@ def generate_charts(word_count, chart_type):
     # 下载字体文件
     download_font(font_url, font_filename)
     
-    prop = fm.FontProperties(fname=font_path)
+    prop = fm.FontProperties(fname=font_filename)
     plt.rcParams['font.family'] = prop.get_name()
 
     word_freq = word_count.most_common(20)
