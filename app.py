@@ -56,7 +56,17 @@ def filter_word_frequency(word_count, min_freq, max_freq):
 # 步骤 6：生成词云图
 def generate_wordcloud(word_count):
     word_freq = dict(word_count.most_common(100))  # 取前100个词
-    wc = WordCloud(font_path='mumu-ning/pythonshixun/blob/main/SimHei.ttf', width=800, height=400, background_color='white').generate_from_frequencies(word_freq)
+    
+    # 使用GitHub的原始文件链接来引用字体
+    font_path = 'https://github.com/pythonshixun/your-repository/raw/main/SimHei.ttf'
+    
+    wc = WordCloud(
+        font_path=font_path,  # 使用GitHub上的字体文件
+        width=800,
+        height=400,
+        background_color='white'
+    ).generate_from_frequencies(word_freq)
+    
     return wc
 
 # 步骤 7：显示词云图
@@ -69,7 +79,7 @@ def display_wordcloud(wc):
 
 # 步骤 8：生成图表
 def generate_charts(word_count, chart_type):
-    font_path = 'mumu-ning/pythonshixun/blob/main/SimHei.ttf'
+    font_path = 'https://github.com/pythonshixun/your-repository/raw/main/SimHei.ttf'
     prop = fm.FontProperties(fname=font_path)
     plt.rcParams['font.family'] = prop.get_name()
 
