@@ -237,7 +237,7 @@ def main():
                 st.warning("未抓取到网页内容，请检查URL或网站内容。")
                 return
 
-            font_path = 'D:/python/python实训/test3/SimHei.ttf'  # 指定字体文件路径
+            font_path = 'SimHei.ttf'  # 指定字体文件路径
             prop = fm.FontProperties(fname=font_path)
             plt.rcParams['font.family'] = prop.get_name()
 
