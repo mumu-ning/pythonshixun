@@ -85,6 +85,14 @@ def generate_wordcloud(word_count):
     return wc
 
 # 步骤 7：显示词云图
+def display_wordcloud(wc):
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.imshow(wc, interpolation='bilinear')
+    ax.axis('off')
+    plt.tight_layout()
+    st.pyplot(fig)
+
+# 步骤 8：生成图表
 def generate_charts(word_count, chart_type):
     # GitHub 上字体文件的 raw URL
     font_url = "https://raw.githubusercontent.com/mumu-ning/pythonshixun/main/SimHei.ttf"
