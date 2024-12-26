@@ -106,7 +106,9 @@ def generate_wordcloud(word_count):
 # 步骤 7：绘制词频图
 def plot_word_freq(word_count):
     # 设置支持中文的字体
-    plt.rcParams['font.family'] = 'SimHei'  # 设置黑体字体（SimHei），或者使用 'Microsoft YaHei' 代替
+    font_path = 'SimHei.ttf'  # 指定字体文件路径
+    prop = fm.FontProperties(fname=font_path)
+    plt.rcParams['font.family'] = prop.get_name()
 
     # 获取词频
     word_freq = word_count.most_common(20)
@@ -131,7 +133,9 @@ def plot_word_freq(word_count):
 
 # 绘制词频折线图
 def plot_word_freq_line(word_count):
-    plt.rcParams['font.family'] = 'SimHei'  # 设置黑体字体（SimHei），或者使用 'Microsoft YaHei' 代替
+    font_path = 'SimHei.ttf'  # 指定字体文件路径
+    prop = fm.FontProperties(fname=font_path)
+    plt.rcParams['font.family'] = prop.get_name()
 
     word_freq = word_count.most_common(20)
     words, freqs = zip(*word_freq)
@@ -147,7 +151,9 @@ def plot_word_freq_line(word_count):
 
 # 绘制词频饼图
 def plot_word_freq_pie(word_count):
-    plt.rcParams['font.family'] = 'SimHei'  # 设置黑体字体（SimHei），或者使用 'Microsoft YaHei' 代替
+    font_path = 'SimHei.ttf'  # 指定字体文件路径
+    prop = fm.FontProperties(fname=font_path)
+    plt.rcParams['font.family'] = prop.get_name()
 
     word_freq = word_count.most_common(10)
     words, freqs = zip(*word_freq)
@@ -160,7 +166,9 @@ def plot_word_freq_pie(word_count):
 
 # 绘制词频条形图
 def plot_word_freq_bar(word_count):
-    plt.rcParams['font.family'] = 'SimHei'  # 设置黑体字体（SimHei），或者使用 'Microsoft YaHei' 代替
+    font_path = 'SimHei.ttf'  # 指定字体文件路径
+    prop = fm.FontProperties(fname=font_path)
+    plt.rcParams['font.family'] = prop.get_name()
 
     word_freq = word_count.most_common(20)
     words, freqs = zip(*word_freq)
@@ -176,7 +184,9 @@ def plot_word_freq_bar(word_count):
 
 # 绘制词频面积图
 def plot_word_freq_area(word_count):
-    plt.rcParams['font.family'] = 'SimHei'  # 设置黑体字体（SimHei），或者使用 'Microsoft YaHei' 代替
+    font_path = 'SimHei.ttf'  # 指定字体文件路径
+    prop = fm.FontProperties(fname=font_path)
+    plt.rcParams['font.family'] = prop.get_name()
 
     word_freq = word_count.most_common(20)
     words, freqs = zip(*word_freq)
@@ -193,7 +203,9 @@ def plot_word_freq_area(word_count):
 
 # 绘制词频热力图
 def plot_word_freq_heatmap(word_count):
-    plt.rcParams['font.family'] = 'SimHei'  # 设置黑体字体（SimHei），或者使用 'Microsoft YaHei' 代替
+    font_path = 'SimHei.ttf'  # 指定字体文件路径
+    prop = fm.FontProperties(fname=font_path)
+    plt.rcParams['font.family'] = prop.get_name()
 
     # 获取词频
     word_freq = dict(word_count.most_common(20))
@@ -236,10 +248,6 @@ def main():
             if not text:
                 st.warning("未抓取到网页内容，请检查URL或网站内容。")
                 return
-
-            font_path = 'SimHei.ttf'  # 指定字体文件路径
-            prop = fm.FontProperties(fname=font_path)
-            plt.rcParams['font.family'] = prop.get_name()
 
             # 显示原始文本
             st.subheader("抓取的网页内容")
