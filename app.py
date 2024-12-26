@@ -13,6 +13,14 @@ from pyecharts.charts import WordCloud
 import matplotlib.pyplot as plt
 from streamlit.components.v1 import html
 
+st.markdown("""
+    <style>
+    body {
+        font-family: '微软雅黑', 'Microsoft YaHei', sans-serif;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 # 步骤 1：抓取网页内容
 def fetch_url_content(url):
     try:
