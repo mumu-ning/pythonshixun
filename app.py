@@ -85,23 +85,17 @@ def generate_wordcloud(word_count):
     return wc
 
 # 步骤 7：显示词云图
-def display_wordcloud(wc):
-    fig, ax = plt.subplots(figsize=(10, 5))
-    ax.imshow(wc, interpolation='bilinear')
-    ax.axis('off')
-    plt.tight_layout()
-    st.pyplot(fig)
-
-# 步骤 8：生成图表
 def generate_charts(word_count, chart_type):
-     # GitHub 上字体文件的 raw URL
+    # GitHub 上字体文件的 raw URL
     font_url = "https://raw.githubusercontent.com/mumu-ning/pythonshixun/main/SimHei.ttf"
     font_filename = "SimHei.ttf"  # 本地保存的文件名
     # 下载字体文件
     download_font(font_url, font_filename)
     
+    # 使用 FontProperties 设置字体
     prop = fm.FontProperties(fname=font_filename)
     plt.rcParams['font.family'] = prop.get_name()
+    plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
 
     word_freq = word_count.most_common(20)
     words, freqs = zip(*word_freq)
