@@ -129,14 +129,15 @@ def generate_area_chart(word_counts):
     line.add_yaxis(
         "词频", list(counts),
         is_smooth=True,
-        area_style=opts.AreaStyleOpts(opacity=0.4),
-        label_opts=opts.LabelOpts(is_show=False)
+        label_opts=opts.LabelOpts(is_show=False),
+        areastyle_opts=opts.AreaStyleOpts(opacity=0.4)  # 这里使用 areastyle_opts 而不是 area_style
     )
     line.set_global_opts(
         title_opts=opts.TitleOpts(title="词频面积图"),
         xaxis_opts=opts.AxisOpts(axislabel_opts=opts.LabelOpts(rotate=45))
     )
     return line
+
 
 def generate_line_chart(word_counts):
     line = Line()
