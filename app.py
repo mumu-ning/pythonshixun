@@ -9,7 +9,19 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 from wordcloud import WordCloud  # 导入WordCloud类
+import os
 
+# 下载字体文件
+def download_font(url, filename):
+    if not os.path.exists(filename):  # 如果字体文件不存在，则下载
+        print(f"正在下载字体文件: {url}")
+        response = requests.get(url)
+        with open(filename, 'wb') as f:
+            f.write(response.content)
+        print(f"字体文件下载完成：{filename}")
+    else:
+        print(f"字体文件已存在：{filename}")
+        
 # 步骤 1：抓取网页内容
 def fetch_url_content(url):
     try:
@@ -57,9 +69,11 @@ def filter_word_frequency(word_count, min_freq, max_freq):
 def generate_wordcloud(word_count):
     word_freq = dict(word_count.most_common(100))  # 取前100个词
     
-    # 使用GitHub的原始文件链接来引用字体
-    font_path = 'https://github.com/pythonshixun/your-repository/raw/main/SimHei.ttf'
-    
+     # GitHub 上字体文件的 raw URL
+    font_url = "https://raw.githubusercontent.com/mumu-ning/pythonshixun/main/SimHei.ttf"
+    font_filename = "SimHei.ttf"  # 本地保存的文件名
+    # 下载字体文件
+    download_font(font_url, font_filename)
     wc = WordCloud(
         font_path=font_path,  # 使用GitHub上的字体文件
         width=800,
@@ -79,7 +93,12 @@ def display_wordcloud(wc):
 
 # 步骤 8：生成图表
 def generate_charts(word_count, chart_type):
-    font_path = 'https://github.com/pythonshixun/your-repository/raw/main/SimHei.ttf'
+     # GitHub 上字体文件的 raw URL
+    font_url = "https://raw.githubusercontent.com/mumu-ning/pythonshixun/main/SimHei.ttf"
+    font_filename = "SimHei.ttf"  # 本地保存的文件名
+    # 下载字体文件
+    download_font(font_url, font_filename)
+    
     prop = fm.FontProperties(fname=font_path)
     plt.rcParams['font.family'] = prop.get_name()
 
