@@ -5,7 +5,7 @@ import jieba
 from collections import Counter
 import streamlit as st
 from pyecharts.charts import WordCloud
-from pyecharts.charts import Bar,Line,Pie,Scatter
+from pyecharts.charts import Bar,Line,Pie,Scatter,Funnel
 import streamlit.components.v1 as components
 from pyecharts import options as opts
 
@@ -111,16 +111,12 @@ def generate_bar_chart(word_counts):
     )
     return bar
 
-def generate_bar_chart_horizontal(word_counts):
-    bar = Bar()
+def generate_funnel_chart(word_counts):
+    funnel = Funnel()
     words, counts = zip(*word_counts.items())
-    bar.add_yaxis("词频", list(counts))
-    bar.add_xaxis(list(words))
-    bar.set_global_opts(
-        title_opts=opts.TitleOpts(title="词频条形图"),
-        yaxis_opts=opts.AxisOpts(axislabel_opts=opts.LabelOpts(rotate=45))
-    )
-    return bar
+    funnel.add("", [list(z) for z in zip(words, counts)])
+    funnel.set_global_opts(title_opts=opts.TitleOpts(title="词频漏斗图"))
+    return funnel
 
 def generate_area_chart(word_counts):
     line = Line()
@@ -241,7 +237,7 @@ def main():
             # 图形筛选
             chart_type = st.sidebar.selectbox(
                 "选择图形类型",
-                ["词云图", "词频柱状图", "词频条形图", "词频面积图", "词频折线图", "词频饼图", "词频散点图"]
+                ["词云图", "词频柱状图", "词频漏斗图", "词频面积图", "词频折线图", "词频饼图", "词频散点图"]
             )
             st.sidebar.write(f"当前选择的图形类型: {chart_type}")
             if chart_type == "词云图":
@@ -252,8 +248,8 @@ def main():
                 bar_chart = generate_bar_chart(filtered_word_count)
                 render_pyecharts_chart(bar_chart)
 
-            elif chart_type == "词频条形图":
-                bar_horizontal_chart = generate_bar_chart_horizontal(filtered_word_count)
+            elif chart_type == "词频漏斗图":
+                bar_horizontal_chart = generate_funnel_chart(filtered_word_count)
                 render_pyecharts_chart(bar_horizontal_chart)
 
             elif chart_type == "词频面积图":
