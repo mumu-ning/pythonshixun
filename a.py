@@ -8,8 +8,8 @@ from pyecharts.charts import WordCloud
 from pyecharts.charts import Bar,Line,Pie,Scatter,Funnel
 import streamlit.components.v1 as components
 from pyecharts import options as opts
-
-
+from streamlit_echarts import st_echarts
+import pandas as pd
 
 # 步骤 1：抓取网页内容
 def fetch_url_content(url):
@@ -135,16 +135,45 @@ def generate_area_chart(word_counts):
     return line
 
 
+
+
+
 def generate_line_chart(word_counts):
-    line = Line()
+    # 提取词和频次
     words, counts = zip(*word_counts.items())
-    line.add_xaxis(list(words))
-    line.add_yaxis("词频", list(counts))
-    line.set_global_opts(
-        title_opts=opts.TitleOpts(title="词频折线图"),
-        xaxis_opts=opts.AxisOpts(axislabel_opts=opts.LabelOpts(rotate=45))
-    )
-    return line
+
+    # 定义 ECharts 配置
+    option = {
+        "title": {
+            "text": "词频折线图",
+            "subtext": "数据来源于提供的词频"
+        },
+        "tooltip": {
+            "trigger": "axis"
+        },
+        "xAxis": {
+            "type": "category",
+            "data": list(words),
+            "axisLabel": {
+                "rotate": 45
+            }
+        },
+        "yAxis": {
+            "type": "value"
+        },
+        "series": [
+            {
+                "data": list(counts),
+                "type": "line",
+                "name": "词频",
+                "smooth": True
+            }
+        ]
+    }
+
+    # 使用 Streamlit 和 st_echarts 显示折线图
+    st_echarts(options=option)
+
 
 def generate_pie_chart(word_counts):
     pie = Pie()
@@ -168,6 +197,22 @@ def generate_scatter_chart(word_counts):
     scatter.add_yaxis("词频", list(counts))
     scatter.set_global_opts(title_opts=opts.TitleOpts(title="词频散点图"))
     return scatter
+
+
+# 将字典转换为 DataFrame
+def generate_line1_chart(word_counts):
+    # 提取单词和词频
+    words, counts = zip(*word_counts.items())
+
+    # 创建 DataFrame，'Word' 为 x 轴，'Count' 为 y 轴
+    df = pd.DataFrame({
+        'Word': words,
+        'Count': counts
+    })
+
+    # Streamlit 动态线图：显示词频变化
+    st.line_chart(df.set_index('Word'))
+
 
 
 # 通过streamlit渲染pyecharts词云图
@@ -237,7 +282,7 @@ def main():
             # 图形筛选
             chart_type = st.sidebar.selectbox(
                 "选择图形类型",
-                ["词云图", "词频柱状图", "词频漏斗图", "词频面积图", "词频折线图", "词频饼图", "词频散点图"]
+                ["词云图", "词频柱状图", "词频漏斗图", "词频面积图", "词频折线图", "词频饼图", "词频散点图","动态线图"]
             )
             st.sidebar.write(f"当前选择的图形类型: {chart_type}")
             if chart_type == "词云图":
@@ -257,8 +302,7 @@ def main():
                 render_pyecharts_chart(area_chart)
 
             elif chart_type == "词频折线图":
-                line_chart = generate_line_chart(filtered_word_count)
-                render_pyecharts_chart(line_chart)
+                generate_line_chart(filtered_word_count)
 
             elif chart_type == "词频饼图":
                 pie_chart = generate_pie_chart(filtered_word_count)
@@ -267,6 +311,10 @@ def main():
             elif chart_type == "词频散点图":
                 scatter = generate_scatter_chart(filtered_word_count)
                 render_pyecharts_chart(scatter)
+
+            elif chart_type == "动态线图":
+                st.title("词频动态线图")
+                generate_line1_chart(filtered_word_count)
 
         except Exception as e:
             st.error(f"抓取或处理文本时出错: {e}")
