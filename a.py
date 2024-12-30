@@ -266,7 +266,6 @@ def main():
 
             elif chart_type == "词频散点图":
                 scatter = generate_scatter_chart(filtered_word_count)
-                st.subheader('词频散点图')
                 render_pyecharts_chart(scatter)
 
         except Exception as e:
